@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Order of magnitude guesser</title>
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style>
+    answers {
+      display:table-caption;
+    }
+    #img {
+      width:300px;
+      height: auto;
+    }
+    button {
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <question></question>
+    </div>
+    <div class="row">
+      <img id="img" src="">
+    </div>
+    <div class="row">
+      <answers></answers>
+    </div>
+    <div class="row">
+      <score></score>
+    </div>
+  </div>
+</body>
+<script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+  
+  var question_number = 0
+  var total_questions = -1
+  var items = [];
+  var points = 0
+
+  function display_answers(answers) {
+    // Random 1, 2 or 3
+    var start = Math.floor(Math.random()*3)
+    // Another random to decide on a type of answer
+    var types = ["numerical_form", "written_form", "comparison_text"]
+    var type = types[Math.floor(Math.random()*3)]
+    // Prints 3 answers
+    $("answers").empty();
+    for (i=start; i< start+3; i++) {
+      $("answers").append("<button class='btn btn-default' onClick='next_question("+ answers[i]["right_answer"] +")'>"+answers[i][type]+"</button>")
+    }
+  }
+
+  function next_question(response) {
+    if (response == true) {
+      points++
+    }
+    if (question_number <= total_questions){
+      question_number++
+    }
+    $("#img").attr("src", "")
+    new_question()
+    $("score").text("Your score:" + points + "/" + question_number)
+  }
+
+  function new_question(){
+    $("question").text(items[question_number]["question"])
+    $("#img").attr("src", items[question_number]["image"])
+    display_answers(items[question_number]["answers"])
+  }
+
+  $.getJSON( "questions.json", function( data ) {
+    $.each( data, function( key, val ) {
+      items.push(val)
+    });
+    total_questions = items.length
+    new_question()
+  });
+</script>
+
+</html>
