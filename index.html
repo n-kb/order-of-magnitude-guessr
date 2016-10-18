@@ -57,21 +57,35 @@
     }
   }
 
+  function shuffle(o) {
+    var j, x, i = o.length; 
+    while (i) { // same as while(i != 0)
+       j = parseInt(Math.random() * i);
+       x = o[--i];
+       o[i] = o[j];
+       o[j] = x;
+    }
+  return o;
+  }
+
   function next_question(response) {
     if (response == true) {
       points++
     }
-    if (question_number <= total_questions){
-      question_number++
-    }
+    question_number++
     $("#img").attr("src", "")
-    new_question()
-    $("score").text("Your score:" + points + "/" + question_number)
+    if (question_number == total_questions){
+      $("question").text("That's it! Well done!")
+      $("answers").empty();
+    } else {
+      new_question()
+    }
+    $("score").text("Your score: " + points + "/" + question_number)
   }
 
   function new_question(){
     $("question").text(items[question_number]["question"])
-    $("#img").attr("src", items[question_number]["image"])
+    $("#img").attr("src", "images/" + items[question_number]["image"])
     display_answers(items[question_number]["answers"])
   }
 
@@ -79,6 +93,7 @@
     $.each( data, function( key, val ) {
       items.push(val)
     });
+    items = shuffle(items)
     total_questions = items.length
     new_question()
   });
