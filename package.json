@@ -1,0 +1,26 @@
+{
+  "name": "order-of-magnitude-guesser",
+  "dependencies": {
+    "csv": "1.1.0",
+    "fs": "*",
+    "request": "2.72.0",
+    "globalize": "1.1.1"
+  },
+  "version": "1.0.0",
+  "main": "/",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/n-kb/order-of-magnitude-guessr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n-kb/order-of-magnitude-guessr/issues"
+  },
+  "homepage": "https://github.com/n-kb/order-of-magnitude-guessr",
+  "description": "Made in FDD with pride"
+}
